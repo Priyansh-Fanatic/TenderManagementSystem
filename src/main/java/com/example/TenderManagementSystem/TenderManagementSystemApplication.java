@@ -9,7 +9,7 @@ public class TenderManagementSystemApplication {
 	public static void create_db() {
 		String url = "jdbc:mysql://127.0.0.1:3306/";
 		String user = "root";
-		String password = "1471";
+		String password = "PASSWORD";
 
 		try (Connection conn = DriverManager.getConnection(url, user, password);
 			 Statement stmt = conn.createStatement()) {
