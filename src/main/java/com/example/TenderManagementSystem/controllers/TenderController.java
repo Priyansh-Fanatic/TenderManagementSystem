@@ -25,7 +25,7 @@ public class TenderController {
     private static final Logger logger = LoggerFactory.getLogger(TenderController.class);
     private static final String URL = "jdbc:mysql://127.0.0.1:3306/TenderManagementSystem";
     private static final String USER = "root";
-    private static final String DB_PASSWORD = "1471";
+    private static final String DB_PASSWORD = "PASSWORD";
 
     private boolean isLoggedIn(HttpSession session) {
         return session.getAttribute("username") != null;
