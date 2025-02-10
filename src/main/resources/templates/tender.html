@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tender Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url("/tendor_bg5.jpg"); /* Use relative path for static resource */
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+            height: 100vh; /* Ensures the body takes full height */
+        }
+
+        .table-container {
+            backdrop-filter: blur(10px); /* Apply blur effect */
+            background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent white background */
+            border-radius: 10px; /* Optional: rounded corners */
+            padding: 20px; /* Optional: padding around the table */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-5">
+    <!-- Header with Title and Back Button -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Tender Section</h2>
+        <a href="/" class="btn btn-primary">Back to Homepage</a>
+    </div>
+
+    <p style="color: #343a40;">Information and functionalities related to tenders.</p> <!-- Dark gray color -->
+
+    <!-- Styled Data Table for Tenders -->
+    <div class="table-container">
+        <table class="table table-bordered table-hover table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>Tender ID</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Deadline</th>
+                <th>Status</th>
+                <th>BID</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Display 'No data found' if tenders list is empty -->
+            <tr th:if="${#lists.isEmpty(tenders)}">
+                <td colspan="7" class="text-center text-muted">No data found</td>
+            </tr>
+
+            <!-- Loop through tenders data -->
+            <tr th:each="tender : ${tenders}">
+                <td th:text="${tender.id}"></td>
+                <td th:text="${tender.tender_id}"></td>
+                <td th:text="${tender.title}"></td>
+                <td th:text="${tender.description}"></td>
+                <td th:text="${#dates.format(tender.deadline, 'yyyy-MM-dd')}"></td> <!-- Format date -->
+                <td th:text="${tender.status}"></td>
+                <td>
+                    <!-- Show the "Bid" button if the vendor is logged in, approved, and status is not closed -->
+                    <form th:action="@{/bid}" method="get" th:if="${isLoggedIn} and ${isApproved} and tender.status != 'closed'">
+                        <input type="hidden" name="tenderId" th:value="${tender.tender_id}" />
+                        <button type="submit" class="btn btn-success"
+                                th:disabled="${tender.status == 'Closed'}">Bid</button>
+                    </form>
+
+                    <!-- Optionally show a message if not allowed to bid -->
+                    <div th:if="${not isLoggedIn or not isApproved or tender.status == 'closed'}" class="text-danger">
+                        You must be logged in and approved to bid.
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script><!-- Removed 'https:' from CDN for consistency -->
+<script src="//stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script><!-- Removed 'https:' from CDN for consistency -->
+
+</body>
+</html>

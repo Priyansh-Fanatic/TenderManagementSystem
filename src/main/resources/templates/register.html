@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url("/register_bg3.jpg"); /* Use relative path for static resource */
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+            height: 100vh; /* Ensures the body takes full height */
+        }
+
+        .content-container {
+            backdrop-filter: blur(10px); /* Apply blur effect */
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+            border-radius: 10px; /* Optional: rounded corners */
+            padding: 20px; /* Optional: padding around the content */
+            margin-top: 50px; /* Space from the top */
+        }
+
+        .top-right {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-4 position-relative">
+    <a href="/" class="btn btn-secondary top-right">Back to Homepage</a>
+
+    <!-- Title -->
+    <h2 class="text-center mb-4">Register</h2>
+
+    <!-- Nav tabs for switching between Vendor and Bidder registration -->
+    <ul class="nav nav-tabs" id="registrationTabs" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="vendor-tab" data-toggle="tab" href="#vendor" role="tab">Register as Vendor</a>
+        </li>
+    </ul>
+
+    <!-- Tab content -->
+    <div class="tab-content mt-3">
+
+        <!-- Vendor Registration Form -->
+        <div class="tab-pane fade show active content-container" id="vendor" role="tabpanel">
+            <h4>Vendor Registration</h4>
+            <form action="/vendorRegister" method="post">
+                <div class="form-group">
+                    <label for="vid">Vendor ID:</label>
+                    <input type="text" class="form-control" id="vid" name="vid" required />
+                </div>
+                <div class="form-group">
+                    <label for="vname">Vendor Name:</label>
+                    <input type="text" class="form-control" id="vname" name="vname" required />
+                </div>
+                <div class="form-group">
+                    <label for="vemail">Email:</label>
+                    <input type="email" class="form-control" id="vemail" name="vemail" required />
+                </div>
+                <div class="form-group">
+                    <label for="vmobile">Mobile Number:</label>
+                    <input type="text" class="form-control" id="vmobile" name="vmobile" required />
+                </div>
+                <div class="form-group">
+                    <label for="vcompany_name">Company Name:</label>
+                    <input type="text" class="form-control" id="vcompany_name" name="vcompany_name" required />
+                </div>
+                <!-- Address Field -->
+                <div class="form-group">
+                    <label for="vaddress">Address:</label>
+                    <textarea class="form-control" id="vaddress" name="vaddress"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="vpassword">Password:</label>
+                    <input type="password" class="form-control" id="vpassword" name="vpassword" required />
+                </div>
+
+                <!-- Additional fields can be added here -->
+                <button type="submit" class="btn btn-primary btn-block">Register Vendor</button>
+            </form>
+        </div>
+
+    </div> <!-- End of tab-content -->
+
+</div>
+
+<!-- Scripts for jQuery and Bootstrap functionality -->
+<script src="//code.jquery.com/jquery-3.5.1.slim.min.js"></script><!-- Removed 'https:' from CDN for consistency -->
+<script src="//cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script><!-- Removed 'https:' from CDN for consistency -->
+<script src="//stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script><!-- Removed 'https:' from CDN for consistency -->
+
+</body>
+</html>

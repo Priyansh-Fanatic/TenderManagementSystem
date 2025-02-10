@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Vendor Profile</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url("/profile_bg2.jpg"); /* Use relative path for static resource */
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+            height: 100vh; /* Ensures the body takes full height */
+        }
+
+        .content-container {
+            backdrop-filter: blur(10px); /* Apply blur effect */
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+            border-radius: 10px; /* Optional: rounded corners */
+            padding: 20px; /* Optional: padding around the content */
+            margin-top: 50px; /* Space from the top */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-5 position-relative">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Vendor Profile</h2>
+        <!-- Back to Homepage Button -->
+        <a href="/" class="btn btn-primary">Back to Homepage</a>
+    </div>
+
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" id="profileTabs" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="details-tab" data-toggle="tab" href="#details" role="tab" aria-controls="details" aria-selected="true">Details</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="pending-bids-tab" data-toggle="tab" href="#pending-bids" role="tab" aria-controls="pending-bids" aria-selected="false">Pending Bids</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="approved-bids-tab" data-toggle="tab" href="#approved-bids" role="tab" aria-controls="approved-bids" aria-selected="false">Approved Bids</a>
+        </li>
+    </ul>
+
+    <!-- Tab content -->
+    <div class="tab-content mt-3 content-container" id="profileTabsContent">
+        <!-- Details Tab -->
+        <div class="tab-pane fade show active" id="details" role="tabpanel" aria-labelledby="details-tab">
+            <h4>Your Details</h4>
+            <p><strong>Name:</strong> <span th:text="${vendor.name}"></span></p>
+            <p><strong>Email:</strong> <span th:text="${vendor.email}"></span></p>
+            <p><strong>Mobile Number:</strong> <span th:text="${vendor.mobile_number}"></span></p>
+            <p><strong>Company Name:</strong> <span th:text="${vendor.company_name}"></span></p>
+            <p><strong>Address:</strong> <span th:text="${vendor.address}"></span></p>
+            <p><strong>Approved:</strong> <span th:text="${vendor.approved}"></span></p>
+        </div>
+
+        <!-- Pending Bids Tab -->
+        <div class="tab-pane fade" id="pending-bids" role="tabpanel" aria-labelledby="pending-bids-tab">
+            <h4>Pending Bids</h4>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Tender ID</th>
+                    <th>Bidding Amount</th>
+                    <th>Solution</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${#lists.isEmpty(pendingBids)}">
+                    <td colspan="4" class="text-center">No pending bids found.</td>
+                </tr>
+                <tr th:each="bid : ${pendingBids}">
+                    <td th:text="${bid.tender_id}"></td>
+                    <td th:text="${bid.bidding_amt}"></td>
+                    <td th:text="${bid.solution}"></td> <!-- Display solution if needed -->
+                    <td th:text="'Pending'"></td> <!-- Status is always Pending -->
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Approved Bids Tab -->
+        <div class="tab-pane fade" id="approved-bids" role="tabpanel" aria-labelledby="approved-bids-tab">
+            <h4>Approved Bids</h4>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Tender ID</th>
+                    <th>Bidding Amount</th>
+                    <th>Solution</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${#lists.isEmpty(approvedBids)}">
+                    <td colspan="4" class="text-center">No approved bids found.</td>
+                </tr>
+                <tr th:each="bid : ${approvedBids}">
+                    <td th:text="${bid.tender_id}"></td>
+                    <td th:text="${bid.bidding_amt}"></td>
+                    <td th:text="${bid.solution}"></td> <!-- Display solution if needed -->
+                    <td th:text="'Approved'"></td> <!-- Status is always Approved -->
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="//code.jquery.com/jquery-3.5.1.slim.min.js"></script><!-- Removed 'https:' from CDN for consistency -->
+<script src="//cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script><!-- Removed 'https:' from CDN for consistency -->
+<script src="//stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script><!-- Removed 'https:' from CDN for consistency -->
+
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url("/login_bg12.jpg"); /* Use relative path for static resource */
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+            height: 100vh; /* Ensures the body takes full height */
+        }
+
+        .content-container {
+            backdrop-filter: blur(10px); /* Apply blur effect */
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+            border-radius: 10px; /* Optional: rounded corners */
+            padding: 20px; /* Optional: padding around the content */
+            margin-top: 50px; /* Space from the top */
+        }
+
+        .top-right {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-4 position-relative">
+    <a href="/" class="btn btn-secondary top-right">Back to Homepage</a>
+
+    <!-- Title -->
+    <h2 class="text-center mb-4">Login</h2>
+
+    <!-- Display logout message if present -->
+    <div th:if="${param.logout}" class="alert alert-success">
+        You have been logged out successfully.
+    </div>
+
+    <!-- Nav tabs for switching between Vendor and Admin login -->
+    <ul class="nav nav-tabs" id="loginTabs" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="vendor-login-tab" data-toggle="tab" href="#vendor-login" role="tab">Login as Vendor</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="admin-login-tab" data-toggle="tab" href="#admin-login" role="tab">Login as Admin</a>
+        </li>
+    </ul>
+
+    <!-- Tab content -->
+    <div class="tab-content mt-3">
+
+        <!-- Vendor Login Form -->
+        <div class="tab-pane fade show active content-container" id="vendor-login" role="tabpanel">
+            <h4>Login as Vendor</h4>
+            <form action="/login/vendor" method="post">
+                <div class="form-group">
+                    <label for="vendorUsername">Username:</label>
+                    <input type="text" class="form-control" id="vendorUsername" name="username" required />
+                </div>
+                <div class="form-group">
+                    <label for="vendorPassword">Password:</label>
+                    <input type="password" class="form-control" id="vendorPassword" name="password" required />
+                </div>
+
+                <!-- Display error message if any -->
+                <div th:if="${error}" class="alert alert-danger">
+                    <span th:text="${error}"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">Login as Vendor</button>
+            </form>
+        </div>
+
+        <!-- Admin Login Form -->
+        <div class="tab-pane fade content-container" id="admin-login" role="tabpanel">
+            <h4>Login as Admin</h4>
+            <form action="/login/admin" method="post">
+                <div class="form-group">
+                    <label for="adminUsername">Username:</label>
+                    <input type="text" class="form-control" id="adminUsername" name="username" required />
+                </div>
+                <div class="form-group">
+                    <label for="adminPassword">Password:</label>
+                    <input type="password" class="form-control" id="adminPassword" name="password" required />
+                </div>
+
+                <!-- Display error message if any -->
+                <div th:if="${error}" class="alert alert-danger">
+                    <span th:text="${error}"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">Login as Admin</button>
+            </form>
+        </div>
+
+    </div> <!-- End of tab-content -->
+
+    <p class="mt-3 text-center">Don't have an account? <a th:href="@{/register}">Register here</a></p>
+
+</div>
+
+<!-- Scripts for jQuery and Bootstrap functionality -->
+<script src="//code.jquery.com/jquery-3.5.1.slim.min.js"></script><!-- Removed 'https:' from CDN for consistency -->
+<script src="//cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script><!-- Removed 'https:' from CDN for consistency -->
+<script src="//stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script><!-- Removed 'https:' from CDN for consistency -->
+
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url("/admin_bg4.jpg"); /* Use relative path for static resource */
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+            height: 100vh; /* Ensures the body takes full height */
+        }
+
+        .content-container {
+            backdrop-filter: blur(10px); /* Apply blur effect */
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+            border-radius: 10px; /* Optional: rounded corners */
+            padding: 20px; /* Optional: padding around the content */
+            margin-top: 50px; /* Space from the top */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-4 position-relative">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="text-center">Admin Dashboard</h1>
+
+        <!-- Logout Button -->
+        <div class="mb-3 text-right">
+            <form action="/admin/logout" method="get">
+                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to log out?')">Logout</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Navigation Links -->
+    <div class="mb-3">
+        <a href="/admin/createTender" class="btn btn-primary">Create New Tender</a>
+    </div>
+
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="tenders-tab" data-toggle="tab" href="#tenders" role="tab" aria-controls="tenders" aria-selected="true">Tenders</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="vendors-tab" data-toggle="tab" href="#vendors" role="tab" aria-controls="vendors" aria-selected="false">Vendors</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="bidders-tab" data-toggle="tab" href="#bidders" role="tab" aria-controls="bidders" aria-selected="false">Bidders</a>
+        </li>
+    </ul>
+
+    <!-- Tab content -->
+    <div class="tab-content mt-3 content-container">
+        <!-- Tenders Tab -->
+        <div class="tab-pane fade show active" id="tenders" role="tabpanel">
+            <h2>Tenders</h2>
+            <table class="table table-bordered table-hover table-striped">
+                <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Tender ID</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Deadline</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${#lists.isEmpty(tenders)}">
+                    <td colspan="7" class="text-center text-muted">No data found</td>
+                </tr>
+                <tr th:each="tender : ${tenders}">
+                    <td th:text="${tender.id}"></td>
+                    <td th:text="${tender.tenderId}"></td>
+                    <td th:text="${tender.title}"></td>
+                    <td th:text="${tender.description}"></td>
+                    <td th:text="${#dates.format(tender.deadline, 'yyyy-MM-dd')}"></td>
+                    <td th:text="${tender.status}"></td>
+                    <td>
+                        <form action="/admin/closeTender" method="post" style="display:inline;">
+                            <input type="hidden" name="id" th:value="${tender.id}"/>
+                            <button type="submit" class="btn btn-danger"
+                                    th:disabled="${tender.status == 'Closed'}">Close</button>
+                        </form>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Vendors Tab -->
+        <div class="tab-pane fade" id="vendors" role="tabpanel">
+            <h2>Vendors</h2>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Vendor ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Mobile Number</th>
+                    <th>Company Name</th>
+                    <th>Address</th>
+                    <th>Approved</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${#lists.isEmpty(vendors)}">
+                    <td colspan="8" class="text-center">No vendors found.</td>
+                </tr>
+                <tr th:each="vendor : ${vendors}">
+                    <td th:text="${vendor.id}"></td>
+                    <td th:text="${vendor.vendorId}"></td>
+                    <td th:text="${vendor.name}"></td>
+                    <td th:text="${vendor.email}"></td>
+                    <td th:text="${vendor.mobileNumber}"></td>
+                    <td th:text="${vendor.companyName}"></td>
+                    <td th:text="${vendor.address}"></td>
+                    <td th:text="${vendor.approved ? 'Yes' : 'No'}"></td>
+                    <td>
+                        <form action="/admin/approveVendor" method="post">
+                            <input type="hidden" name="id" th:value="${vendor.id}" />
+                            <button type="submit" class="btn btn-success"
+                                    th:disabled="${vendor.approved}">Approve</button>
+                        </form>
+                    </td>
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <!-- Bidders Tab -->
+        <div class="tab-pane fade" id="bidders" role="tabpanel">
+            <h2>Bidders</h2>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Bidder ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Mobile Number</th>
+                    <th>Company Name</th>
+                    <th>Tendor ID</th>
+                    <th>Bidding amount</th>
+                    <th>Solution</th>
+                    <th>Approved</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${#lists.isEmpty(bidders)}">
+                    <td colspan="8" class="text-center">No bidders found.</td>
+                </tr>
+                <tr th:each="bidder : ${bidders}">
+                    <td th:text="${bidder.id}"></td>
+                    <td th:text="${bidder.vendorId}"></td>
+                    <td th:text="${bidder.name}"></td>
+                    <td th:text="${bidder.email}"></td>
+                    <td th:text="${bidder.mobileNumber}"></td>
+                    <td th:text="${bidder.companyName}"></td>
+                    <td th:text="${bidder.tenderId}"></td>
+                    <td th:text="${bidder.biddingAmt}"></td>
+                    <td th:text="${bidder.solution}"></td>
+                    <td th:text="${bidder.approved ? 'Yes' : 'No'}"></td>
+                    <td>
+                        <form action="/admin/approveBidder" method="post">
+                            <input type="hidden" name="id" th:value="${bidder.id}" />
+                            <button type="submit" class="btn btn-success" th:disabled="${bidder.approved}">Approve</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div><!-- End of tab-content -->
+
+    <!-- Include JavaScript libraries for Bootstrap functionality -->
+    <script src="//code.jquery.com/jquery-3.5.1.slim.min.js"></script><!-- Removed 'https:' from CDN for consistency -->
+    <script src="//cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script><!-- Removed 'https:' from CDN for consistency -->
+    <script src="//stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script><!-- Removed 'https:' from CDN for consistency -->
+
+</body>
+
+</html>

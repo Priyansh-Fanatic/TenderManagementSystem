@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Submit Bid</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url('bid_bg.jpg'); /* Replace with your image URL */
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.8); /* White background with transparency */
+            backdrop-filter: blur(10px); /* Blur effect */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2>Submit Your Bid</h2>
+    <p class="text-muted">Please fill out the form below to submit your bid for the tender.</p>
+
+    <!-- Bid Submission Form -->
+    <form th:action="@{/submitBid}" method="post">
+        <div class="form-group">
+            <label for="tenderId">Tender ID</label>
+            <input type="text" class="form-control" id="tenderId" name="tenderId" th:value="${tenderId}" readonly required />
+        </div>
+        <div class="form-group">
+            <label for="biddingAmount">Bidding Amount</label>
+            <input type="number" class="form-control" id="biddingAmount" name="biddingAmount" required />
+        </div>
+        <div class="form-group">
+            <label for="solution">Solution</label>
+            <textarea class="form-control" id="solution" name="solution" rows="4" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Bid</button>
+        <a href="/tender" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

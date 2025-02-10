@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Tender</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url("/createTender_bg2.jpg"); /* Use relative path for static resource */
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+            height: 100vh; /* Ensures the body takes full height */
+        }
+
+        .content-container {
+            backdrop-filter: blur(10px); /* Apply blur effect */
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+            border-radius: 10px; /* Optional: rounded corners */
+            padding: 20px; /* Optional: padding around the content */
+            margin-top: 50px; /* Space from the top */
+        }
+
+        .top-right {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-4 position-relative">
+    <a href="/" class="btn btn-secondary top-right">Back to Homepage</a>
+
+    <div class="content-container">
+        <h2>Create New Tender</h2>
+
+        <form action="/admin/createTender" method="post">
+            <div class="form-group">
+                <label for="tenderId">Tender Id:</label>
+                <input type="text" class="form-control" id="tenderId" name="tenderId" required>
+            </div>
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" class="form-control" id="title" name="title" required>
+            </div>
+            <div class="form-group">
+                <label for="deadline">Deadline:</label>
+                <input type="date" class="form-control" id="deadline" name="deadline" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Create Tender</button>
+        </form>
+
+        <a href="/admin" class="btn btn-secondary mt-3">Back to Admin Dashboard</a>
+    </div>
+
+</div>
+
+<script src="//code.jquery.com/jquery-3.5.1.slim.min.js"></script><!-- Removed 'https:' from CDN for consistency -->
+<script src="//cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script><!-- Removed 'https:' from CDN for consistency -->
+<script src="//stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script><!-- Removed 'https:' from CDN for consistency -->
+
+</body>
+</html>
