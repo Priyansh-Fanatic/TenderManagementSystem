@@ -21,7 +21,7 @@ public class AdminController {
 
     private static final String URL = "jdbc:mysql://127.0.0.1:3306/TenderManagementSystem";
     private static final String USER = "root";
-    private static final String DB_PASSWORD = "1471";
+    private static final String DB_PASSWORD = "PASSWORD";
 
     @GetMapping("/admin")
     public String adminPage(Model model) {
